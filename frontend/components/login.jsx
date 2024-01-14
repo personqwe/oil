@@ -6,8 +6,22 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export function login() {
+  const router = useRouter();
+  useEffect(() => {
+    checkLoginStatus().then(isLoggedIn => {
+      if (isLoggedIn) {
+        router.push('/main');
+      }
+    });
+  }, []);
+  const handleKakaoLogin = () => {
+    //카카오 로그인 URL로 리디렉션
+    window.location.href = 'http://gr5home.iptime.org:500/auth/kakao';
+  };
   return (
     (<div className="bg-white">
       <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
@@ -79,7 +93,7 @@ export function login() {
                 <div className="flex items-center justify-between mt-4">
                   <Button
                     className="w-full px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-700 focus:outline-none focus:shadow-outline"
-                    type="button">
+                    type="button"onClick={handleKakaoLogin}>
                     Kakao Login
                   </Button>
                 </div>
@@ -158,4 +172,18 @@ function UserIcon(props) {
     </svg>)
   );
 }
+
+async function checkLoginStatus() {
+  try {
+    const response = await fetch('http://gr5home.iptime.org:3000/api/check-auth', {
+      credentials: 'include' // 쿠키를 포함시키기 위함
+    });
+    const data = await response.json();
+    return data.isLoggedIn; // 로그인 상태 (true 또는 false) 반환
+  } catch (error) {
+    console.error('Failed to check login status', error);
+    return false;
+  }
+}
+
 export default login;;
