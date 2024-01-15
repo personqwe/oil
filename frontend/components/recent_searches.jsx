@@ -24,14 +24,11 @@ export function recent_searches() {
           <Link className="text-gray-500 dark:text-gray-400" href="#">
             Favorites
           </Link>
-          <Link className="text-gray-500 dark:text-gray-400" href="#">
+          <Link className="font-bold" href="#">
             Recent Searches
           </Link>
           <Link className="text-gray-500 dark:text-gray-400" href="#">
-            Login
-          </Link>
-          <Link className="text-gray-500 dark:text-gray-400" href="#">
-            Sign Up
+            Profile
           </Link>
         </nav>
         <div className="flex items-center w-full gap-4 md:ml-auto md:gap-2 lg:gap-4">

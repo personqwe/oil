@@ -9,6 +9,4 @@ router.use((req, res, next) => { // 여기서 직접 찾아도 following followe
     next();
 })
 
-router.get('/', isLoggedIn, renderMain); //라우터의 마지막 미들웨어는 컨트롤러
-
 module.exports = router;

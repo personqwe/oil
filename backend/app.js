@@ -20,7 +20,7 @@ const app = express();
 app.set('port', process.env.PORT || 8080);
 passportConfig(); // passport 실행
 app.use(cors({
-    origin: '@@@@@',
+    origin: 'gr5home.iptime.org:2000',
     credentials: true 
 }));
 

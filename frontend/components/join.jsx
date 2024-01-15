@@ -7,9 +7,9 @@ import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-export function sign_up() {
+export function join() {
   return (
-    (<div className="flex flex-col w-full min-h-screen">
+    (<div className="bg-white">
       <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
         <nav
           className="flex-col hidden gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -19,11 +19,10 @@ export function sign_up() {
             <FuelIcon className="w-6 h-6" />
             <span className="sr-only">Gas Station Finder</span>
           </Link>
-          <Link className="font-bold" href="#">
+          <Link href="/">
+            <span className="font-bold" href="#">
             Home
-          </Link>
-          <Link className="text-gray-500 dark:text-gray-400" href="#">
-            Login
+            </span>
           </Link>
         </nav>
       </header>
@@ -42,7 +41,7 @@ export function sign_up() {
                     Username
                   </label>
                   <Input
-                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border border-gray-200 rounded shadow appearance-none focus:outline-none focus:shadow-outline dark:border-gray-800"
+                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="username"
                     placeholder="Enter your username"
                     type="text" />
@@ -52,7 +51,7 @@ export function sign_up() {
                     Nickname
                   </label>
                   <Input
-                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border border-gray-200 rounded shadow appearance-none focus:outline-none focus:shadow-outline dark:border-gray-800"
+                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="nickname"
                     placeholder="Enter your nickname"
                     type="text" />
@@ -62,7 +61,7 @@ export function sign_up() {
                     Email
                   </label>
                   <Input
-                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border border-gray-200 rounded shadow appearance-none focus:outline-none focus:shadow-outline dark:border-gray-800"
+                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="email"
                     placeholder="Enter your email"
                     type="email" />
@@ -72,7 +71,7 @@ export function sign_up() {
                     Password
                   </label>
                   <Input
-                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border border-gray-200 rounded shadow appearance-none focus:outline-none focus:shadow-outline dark:border-gray-800"
+                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="password"
                     placeholder="Enter your password"
                     type="password" />
@@ -82,7 +81,7 @@ export function sign_up() {
                     Confirm Password
                   </label>
                   <Input
-                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border border-gray-200 rounded shadow appearance-none focus:outline-none focus:shadow-outline dark:border-gray-800"
+                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="confirm-password"
                     placeholder="Confirm your password"
                     type="password" />
@@ -111,7 +110,7 @@ function FuelIcon(props) {
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      viewBox="0 24"
+      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -119,8 +118,9 @@ function FuelIcon(props) {
       strokeLinejoin="round">
       <line x1="3" x2="15" y1="22" y2="22" />
       <line x1="4" x2="14" y1="9" y2="9" />
-      <path d="M14 22V4a2 2 0 0-2-2H6a2 0-2 2v18" />
-      <path d="M14 13h2a2 2 0 1 2v2a2 2h0a2 2-2V9.83a2 0-.59-1.42L18 5" />
+      <path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18" />
+      <path
+        d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5" />
     </svg>)
   );
 }
@@ -133,15 +133,15 @@ function UserIcon(props) {
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      viewBox="0 24"
+      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round">
-      <path d="M19 21v-2a4 4 0 0-4-4H9a4 0-4 4v2" />
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
       <circle cx="12" cy="7" r="4" />
     </svg>)
   );
 }
-export default sign_up;
+export default join;
