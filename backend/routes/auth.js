@@ -12,6 +12,15 @@ router.get('/kakao/callback', passport.authenticate('kakao', {
 }), (req, res) => {
     res.redirect('@@@@@@@@@@@@/main');
 });
+
+router.get('/check', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.json({ isLoggedIn: true });
+    } else {
+      res.json({ isLoggedIn: false });
+    }
+  });
+  
 module.exports = router;
 
 //app.use(passort.authenticate('kakao)); = 기본 기능만 사용

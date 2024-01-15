@@ -12,16 +12,6 @@ module.exports = () => {
     passport.deserializeUser((id, done) => { // id: 1 이를 통해 유저정보를 복원
         User.findOne({
             where: {id},
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'nick'],
-                },
-                {
-                    model: User,
-                    attributes: ['id', 'nick'],
-                }
-            ]
         })
         .then((user) => done(null, user)) //req.user, req.session 사용자 조회를 통해 데이터가 복원되어 사용 가능
         .catch(err => done(err)); // connect.sid 쿠키로 세션에서 찾을 때 req.session이 생성

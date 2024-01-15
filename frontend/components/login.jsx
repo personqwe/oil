@@ -6,10 +6,20 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { handleKakaoLogin } from '../handlers/loginHandlers';
-import { handleJoinPage } from '../handlers/pageHandlers';
+import { handleKakaoLogin, checkLoginStatus } from '../handlers/loginHandlers';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export function login() {
+  const router = useRouter();
+
+  useEffect(() => {
+    checkLoginStatus().then(isLoggedIn => {
+      if (isLoggedIn) {
+        router.replace('/main'); // 로그인 상태이면 /main으로 리디렉션
+      }
+    });
+  }, []);
   return (
     (<div className="bg-white">
       <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
