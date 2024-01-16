@@ -13,13 +13,21 @@ router.get('/kakao/callback', passport.authenticate('kakao', {
     res.redirect('@@@@@@@@@@@@/main');
 });
 
-router.get('/check', (req, res) => {
+router.get('/api/user', (req, res) => {
     if (req.isAuthenticated()) {
-      res.json({ isLoggedIn: true });
+      res.json({user: req.user });
     } else {
-      res.json({ isLoggedIn: false });
+      res.json({user: null });
     }
   });
+  
+  router.get('/api/check', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.json({isLoggedIn: true});
+    } else {
+      res.json({isLoggedIn: false});
+    }
+  })
   
 module.exports = router;
 
