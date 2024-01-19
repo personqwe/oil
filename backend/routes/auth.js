@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
+const { join, login, check, user } = require('../controller/auth');
 const router = express.Router();
 
 // /auth/kakao
@@ -8,27 +9,19 @@ router.get('/kakao', passport.authenticate('kakao')); // 카카오톡 로그인 
 // /auth/kakao -> 카카오톡 로그인 화면 -> 로그인이 성공 -> /auth/kakao/callback
 // /auth/kakao/callback
 router.get('/kakao/callback', passport.authenticate('kakao', {
-    failureRedirect: '@@@@@@@@@@@@@@@/login', // 로그인 실패 시 리디렉션
+    failureRedirect: 'http://gr5home.iptime.org:300/', // 로그인 실패 시 리디렉션
 }), (req, res) => {
-    res.redirect('@@@@@@@@@@@@/main');
+    res.redirect('http://gr5home.iptime.org:300/main');
 });
 
-router.get('/api/user', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.json({user: req.user });
-    } else {
-      res.json({user: null });
-    }
-  });
-  
-  router.get('/api/check', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.json({isLoggedIn: true});
-    } else {
-      res.json({isLoggedIn: false});
-    }
-  })
-  
+router.post('/join', isNotLoggedIn, join);
+
+router.post('/login', isNotLoggedIn, login);
+
+router.get('/check', check);
+
+router.get('/user', isLoggedIn, user);
+
 module.exports = router;
 
 //app.use(passort.authenticate('kakao)); = 기본 기능만 사용

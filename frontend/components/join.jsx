@@ -37,22 +37,12 @@ export function join() {
             <CardContent>
               <form>
                 <div className="mb-4">
-                  <label className="block text-sm font-bold mb-2" htmlFor="username">
-                    Username
-                  </label>
-                  <Input
-                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="username"
-                    placeholder="Enter your username"
-                    type="text" />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-bold mb-2" htmlFor="nickname">
+                  <label className="block text-sm font-bold mb-2" htmlFor="nick">
                     Nickname
                   </label>
                   <Input
                     className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="nickname"
+                    id="nick"
                     placeholder="Enter your nickname"
                     type="text" />
                 </div>
@@ -101,6 +91,7 @@ export function join() {
     </div>)
   );
 }
+
 
 
 function FuelIcon(props) {
