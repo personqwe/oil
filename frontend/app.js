@@ -20,6 +20,7 @@ server.prepare().then(() => {
     app.use('/auth/api/check', createProxyMiddleware({
         target: 'http://gr5home.iptime.org:500',
         changeOrigin: true,
+        pathRewrite: { '^/auth/api/check': '/auth/check' },
         onProxyRes: function (proxyRes, req, res) {
             proxyRes.on('data', function(data) {
             console.log("check Received data from Backend: ", data.toString());
@@ -30,11 +31,18 @@ server.prepare().then(() => {
     app.use('/auth/api/user', createProxyMiddleware({
         target: 'http://gr5home.iptime.org:500',
         changeOrigin: true,
+        pathRewrite: { '^/auth/api/user': '/auth/user' },
         onProxyRes: function (proxyRes, req, res) {
             proxyRes.on('data', function(data) {
             console.log("user Received data from Backend: ", data.toString());
     });
     }
+    }));
+
+    app.use('/auth/api/join', createProxyMiddleware({
+        target: 'http://gr5home.iptime.org:500',
+        changeOrigin: true,
+        pathRewrite: { '^/auth/api/join': '/auth/join' },
     }));
 
      app.all('*', (req, res) => {

@@ -15,7 +15,7 @@ exports.join = async (req, res, next) => {
             nick,
             password: hash,
         });
-        return res.redirect('http://gr5home.iptime.org:300/'); // 302
+        return res.status(201).json({ message: "User created successfully" });
     } catch (error) {
         console.error(error);
         next(error);
