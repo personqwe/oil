@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 
 export function login() {
   const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     checkLoginStatus().then(isLoggedIn => {
@@ -60,16 +62,18 @@ export function login() {
               <UserIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             </CardHeader>
             <CardContent>
-            <form>
+            <form onSubmit={(e) => loginSubmit(e, { email, password })}>
                 <div className="mb-4">
-                  <label className="block text-sm font-bold mb-2" htmlFor="username">
-                    Username
+                  <label className="block text-sm font-bold mb-2" htmlFor="email">
+                    Email
                   </label>
                   <Input
                     className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="username"
-                    placeholder="Enter your username"
-                    type="text" />
+                    id="email"
+                    placeholder="Enter your email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="mb-6">
                   <label className="block text-sm font-bold mb-2" htmlFor="password">
@@ -79,7 +83,9 @@ export function login() {
                     className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="password"
                     placeholder="Enter your password"
-                    type="password" />
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="flex items-center justify-between">
                   <Button

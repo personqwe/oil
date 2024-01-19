@@ -14,3 +14,23 @@ export const checkLoginStatus = async () => {
       return false;
     }
   }
+
+  export const loginSubmit = async (e, { email, password }) => {
+    e.preventDefault();
+    try {
+        const response = await axios.post('http://gr5home.iptime.org:300/auth/api/login', {
+          email,
+          password,
+        });
+    
+        if (response.status === 200) {
+            window.location.href = `http://gr5home.iptime.org:300/main`
+          return alert('Successfully login!');
+        } else {
+          return alert('Login failed');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('Login failed');
+      }
+}
