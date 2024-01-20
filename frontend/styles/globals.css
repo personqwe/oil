@@ -25,3 +25,24 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.home-section::-webkit-scrollbar {
+  width: 2px; /* 스크롤 바의 너비를 얇게 설정 */
+}
+
+.home-section::-webkit-scrollbar-track {
+  background: #060606; /* 스크롤 바 트랙의 색상을 회색으로 설정 */
+  border-radius: 10px; /* 스크롤 바 트랙의 둥근 모서리 */
+}
+
+.home-section::-webkit-scrollbar-thumb {
+  background-color: #4a5d69; /* 스크롤 바의 색상을 밝은 보라색으로 설정 */
+  border-radius: 10px; /* 스크롤 바의 둥근 모서리 */
+}
+
+/* 파이어폭스용 스크롤 바 스타일 */
+.home-section {
+  scrollbar-width: thin; /* 스크롤 바의 너비를 얇게 설정 */
+  scrollbar-color: #474651 #060606; /* 스크롤바 색상과 트랙 색상 설정 */
+}
+
