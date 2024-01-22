@@ -1,87 +1,81 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useEffect } from "react";
-import { RiHome6Line } from "react-icons/ri";
-import { MdOutlineManageSearch } from "react-icons/md";
-import { BiMemoryCard } from "react-icons/bi";
-import { MdFavoriteBorder } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
+import React, { useState } from 'react';
+import { handleKakaoLogin, loginSubmit, checkLoginStatus } from '../handlers/loginHandlers';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-export function main() {
+export function login() {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   useEffect(() => {
-    document.querySelector('.home-section').style.scrollbarWidth = 'thin';
-    document.querySelector('.home-section').style.scrollbarColor = '#5e5e5e #1e1e1e';
+    checkLoginStatus().then(isLoggedIn => {
+      if (isLoggedIn) {
+        router.replace('/main');
+      }
+    });
   }, []);
   return (
-    <div className="flex h-screen bg-[#0D1117] text-white">
-    <div className="flex flex-col w-60 h-full bg-[#080808] p-5">
-      <div className="flex items-center mb-6">
-        <FuelIcon className="mr-3 h-16 w-8 text-purple-500" />
-        <span className="text-2xl font-bold">FuelFinde</span>
-      </div>
-      <div className="flex items-center mb-4">
-        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-400 mr-2">
-        </div>
-        <div>
-          <div className="text-lg font-semibold">Faizan</div>
-          <div className="text-xs text-gray-400">@faizan</div>
-        </div>
-      </div>
-      <nav className="mt-4">
-  <Link href="/" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm bg-[#8585fe] text-white font-bold">
-    <RiHome6Line size="1.7em" />
-    <span className="ml-3">Home</span>
-  </Link>
-  <Link href="/search" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
-    <MdOutlineManageSearch size="1.7em" color="#7a75b7"/>
-    <span className="ml-3">Search</span>
-  </Link>
-  <Link href="/recent_search" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
-    <BiMemoryCard size="1.7em" color="#7a75b7"/>
-    <span className="ml-3">Recent Search</span>
-  </Link>
-  <Link href="/favorites" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
-    <MdFavoriteBorder size="1.7em" color="#7a75b7"/>
-    <span className="ml-3">Favorites</span>
-  </Link>
-  <Link href="/profile" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
-    <CgProfile size="1.7em" color="#7a75b7"/>
-    <span className="ml-3">Profile</span>
-  </Link>
-</nav>
-    </div>
-        <div className="flex flex-col w-1/2 h-full overflow-y-scroll p-4 home-section bg-black">
-        <h2 className="text-3xl font-bold mb-4">Home</h2>
-        <p className="text-gray-400">Welcome back! Here's what's new...</p>
-      </div>
-      <div className="flex flex-col w-1/4 h-full bg-black p-4">
-        <h2 className="text-3xl font-bold mb-4">Cheapest Gas Stations</h2>
-        <div className="flex flex-col gap-4">
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 1</h3>
-            <p className="text-gray-400">Price: $2.50</p>
+    <div className="flex h-screen w-full">
+      <div className="flex-1 flex items-center justify-center bg-[#000000] text-white">
+        <div className="w-full max-w-md px-8">
+          <div className="mb-8 text-center">
+            <div className="flex justify-center items-center">
+              <FuelIcon className="h-12 w-12 text-purple-500" />
+              <h1 className="ml-3 text-4xl font-bold text-lightblue-500">FuelFinder</h1>
+            </div>
+            <div className="mt-7">
+              <h2 className="text-2xl font-bold">Log in to your account</h2>
+              <p className="mt-2 text-gray-400">Welcome back! Please enter your details.</p>
+            </div>
           </div>
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 2</h3>
-            <p className="text-gray-400">Price: $2.55</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 3</h3>
-            <p className="text-gray-400">Price: $2.60</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 4</h3>
-            <p className="text-gray-400">Price: $2.65</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 5</h3>
-            <p className="text-gray-400">Price: $2.70</p>
+          <form className="flex flex-col gap-4" onSubmit={(e) => loginSubmit(e, { email, password })}>
+            <div className="flex flex-col">
+              <label className="mb-2" htmlFor="email">Email</label>
+              <Input className="rounded-md bg-[#1f1f21] py-3 px-4 border-none"                     
+                    id="email"
+                    placeholder="Enter your email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div className="flex flex-col">
+              <label className="mb-2" htmlFor="password">Password</label>
+              <Input className="rounded-md bg-[#1f1f21] py-3 px-4 border-none"                     
+                    id="password"
+                    placeholder="Enter your password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <Button className="mt-4 rounded-md bg-[#7a7ae9] py-3 px-4">Login</Button>
+            <div className="relative flex items-center justify-center my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-600"></div>
+              </div>
+              <div className="relative z-10 px-4 bg-[#000000] text-xs text-gray-400">OR</div>
+            </div>
+
+            <Button
+      className="w-full px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-700 focus:outline-none focus:shadow-outline"
+      type="button"
+      onClick={handleKakaoLogin}>
+      Kakao Login
+    </Button>
+          </form>
+          <div className="mt-6 text-center">
+            <span>Don't have an account? </span>
+            <Link className="text-purple-500" href="/join">Sign up</Link>
           </div>
         </div>
+      </div>
+      <div className="flex-1 bg-[#1e1e1e] bg-cover bg-center" style={{ backgroundImage: 'url("/LoginImage.png")' }}>
       </div>
     </div>
-  )
+  );
 }
 
 function FuelIcon(props) {
@@ -105,4 +99,5 @@ function FuelIcon(props) {
     </svg>
   );
 }
-export default main;
+
+export default login;
