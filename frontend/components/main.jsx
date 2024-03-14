@@ -1,12 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import { RiHome6Line } from "react-icons/ri";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { BiMemoryCard } from "react-icons/bi";
 import { MdFavoriteBorder } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
+import Card from "./shared/card";
 
 export function main() {
   useEffect(() => {
@@ -49,7 +50,7 @@ export function main() {
     <CgProfile size="1.7em" color="#7a75b7"/>
     <span className="ml-3">Profile</span>
   </Link>
-</nav>
+  </nav>
     </div>
     <div className="flex flex-grow h-full overflow-y-scroll p-14 home-section bg-black">
     <RiHome6Line size="2.0em" color="#7a75b7" className="mt-1"/>
@@ -58,30 +59,13 @@ export function main() {
       <div className="flex flex-col w-1/4 h-full bg-black p-4">
         <h2 className="text-3xl font-bold mb-4">Cheapest Gas Stations</h2>
         <div className="flex flex-col gap-4">
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 1</h3>
-            <p className="text-gray-400">Price: $2.50</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 2</h3>
-            <p className="text-gray-400">Price: $2.55</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 3</h3>
-            <p className="text-gray-400">Price: $2.60</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 4</h3>
-            <p className="text-gray-400">Price: $2.65</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-md">
-            <h3 className="text-2xl font-bold">Station 5</h3>
-            <p className="text-gray-400">Price: $2.70</p>
-          </div>
+          {stations && stations.map((station, index) => (
+            <Card key={index} station={station} />
+          ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function FuelIcon(props) {

@@ -45,6 +45,17 @@ server.prepare().then(() => {
         pathRewrite: { '^/auth/api/join': '/auth/join' },
     }));
 
+    app.use('/page/api/cheapest', createProxyMiddleware({
+        target: 'http://gr5home.iptime.org:500',
+        changeOrigin: true,
+        pathRewrite: { '^/page/api/cheapest': '/page/cheapest' },
+        onProxyRes: function (proxyRes, req, res) {
+            proxyRes.on('data', function(data) {
+            console.log("cheapest Received data from Backend: ", data.toString());
+    });
+    }
+    }));
+
      app.all('*', (req, res) => {
         console.log('들어옴');
         return handle(req, res);

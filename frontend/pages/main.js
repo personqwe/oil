@@ -1,40 +1,37 @@
 import MainComponent from '../components/main';
 import axios from 'axios';
 
-export default function Home() {
+export default function Home({ user, stations }) {
   return (
     <div>
-      <MainComponent />
+      <MainComponent user={user} stations={stations} />
     </div>
   );
 }
 
 export async function getServerSideProps(context) {
   const cookie = context.req.headers.cookie;
+  let user = null;
+  let stations = [];
 
   try {
-    const response = await axios.get('http://gr5home.iptime.org:300/auth/api/user', {
+    const userResponse = await axios.get('http://gr5home.iptime.org:300/auth/api/user', {
       headers: {
         Cookie: cookie || '',
       },
     });
+    user = userResponse.data.user;
 
-    const data = response.data;
+    const stationsResponse = await axios.get('http://gr5home.iptime.org:300/page/api/cheapest', {
+      headers: { Cookie: cookie || '' },
+    });
+    stations = stationsResponse.data;
 
-    // 로그인하지 않은 경우 리디렉션
-    if (!data.user) {
-      return {
-        redirect: {
-          destination: '/',
-          permanent: false,
-        },
-      };
-    }
-
-    return { props: { user: data.user } };
   } catch (error) {
     console.error('Error fetching data:', error);
+  }
 
+  if (!user) {
     return {
       redirect: {
         destination: '/',
@@ -42,4 +39,6 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  return { props: { user, stations } };
 }

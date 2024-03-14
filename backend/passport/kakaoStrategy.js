@@ -20,6 +20,7 @@ module.exports = () => {
                     nick: profile.displayName,
                     snsId: profile.id,
                     provider: 'kakao', 
+                    profilePhoto: profile._json?.properties?.profile_image,
                 });
                 done(null, newUser);
             }

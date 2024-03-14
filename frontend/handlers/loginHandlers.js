@@ -1,10 +1,12 @@
+import axios from 'axios';
+
 export const handleKakaoLogin = () => {
     window.location.href = `http://gr5home.iptime.org:300/auth/kakao`;
 };
 
 export const checkLoginStatus = async () => {
     try {
-      const response = await fetch('http://gr5home.iptime.org:300/auth/check', { 
+      const response = await fetch('http://gr5home.iptime.org:300/auth/api/check', { 
         credentials: 'include' // 쿠키 정보 포함
       });
       const data = await response.json();
