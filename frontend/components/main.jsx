@@ -7,12 +7,29 @@ import { MdOutlineManageSearch } from "react-icons/md";
 import { BiMemoryCard } from "react-icons/bi";
 import { MdFavoriteBorder } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
-import Card from "./shared/card";
+import CheapestCard from "./shared/card";
 
-export function main() {
+export function Main({ user, stations }) {
   useEffect(() => {
     document.querySelector('.home-section').style.scrollbarWidth = 'thin';
     document.querySelector('.home-section').style.scrollbarColor = '#5e5e5e #1e1e1e';
+    const script = document.createElement('script');
+    script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`;
+    script.async = true;
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      const mapOptions = {
+        center: new window.naver.maps.LatLng(37.3595704, 127.105399),
+        zoom: 10,
+      };
+
+      new window.naver.maps.Map('naver-map', mapOptions);
+    };
+
+    return () => {
+      document.head.removeChild(script);
+    };
   }, []);
   return (
     <div className="flex h-screen bg-[#0D1117] text-white">
@@ -22,11 +39,16 @@ export function main() {
         <span className="text-2xl font-bold">FuelFinde</span>
       </div>
       <div className="flex items-center mb-4">
-        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-400 mr-2">
-        </div>
+      <div className="flex items-center justify-center mr-2">
+  <img
+    src={user.profilePhoto}
+    alt="User profile photo"
+    className="w-10 h-10 rounded-full bg-blue-400"
+  />
+</div>
         <div>
-          <div className="text-lg font-semibold">Faizan</div>
-          <div className="text-xs text-gray-400">@faizan</div>
+          <div className="text-lg font-semibold">{user.nick}</div>
+          <div className="text-xs text-gray-400">{user.email}</div>
         </div>
       </div>
       <nav className="mt-4">
@@ -51,16 +73,19 @@ export function main() {
     <span className="ml-3">Profile</span>
   </Link>
   </nav>
+      </div>
+      <div className="flex flex-col flex-grow h-full overflow-y-scroll p-14 bg-black home-section">
+    <div className="flex items-center mb-5">
+      <RiHome6Line size="2.0em" color="#7a75b7" className="mt-1"/>
+      <h2 className="text-3xl font-bold ml-3">Home</h2>
     </div>
-    <div className="flex flex-grow h-full overflow-y-scroll p-14 home-section bg-black">
-    <RiHome6Line size="2.0em" color="#7a75b7" className="mt-1"/>
-    <h2 className="text-3xl font-bold ml-3">Home</h2>
+        <div id="naver-map" style={{ width: '100%', height: 'calc(100vh - 60px)' }}></div>
       </div>
       <div className="flex flex-col w-1/4 h-full bg-black p-4">
         <h2 className="text-3xl font-bold mb-4">Cheapest Gas Stations</h2>
         <div className="flex flex-col gap-4">
           {stations && stations.map((station, index) => (
-            <Card key={index} station={station} />
+            <CheapestCard key={index} station={station} />
           ))}
         </div>
       </div>
@@ -89,4 +114,4 @@ function FuelIcon(props) {
     </svg>
   );
 }
-export default main;
+export default Main;

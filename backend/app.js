@@ -13,7 +13,6 @@ dotenv.config(); // process.env
 
 const authRouter = require('./routes/auth');
 const pageRouter = require('./routes/page');
-
 const passportConfig = require('./passport'); // passport설정
 const { sequelize } = require('./models');
 
@@ -54,7 +53,6 @@ app.use(passport.session()); // user.id를 저장한게 session으로 저장. Co
 
 app.use('/auth', authRouter);
 app.use('/page', pageRouter);
-
 // Express 라우트 설정
 // 예: app.get('/api/data', (req, res) => { ... });
 app.listen(app.get('port'), () => {

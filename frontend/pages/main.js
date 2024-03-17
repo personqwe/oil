@@ -28,16 +28,14 @@ export async function getServerSideProps(context) {
     stations = stationsResponse.data;
 
   } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-
-  if (!user) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
+    if (error.response && error.response.status === 403) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      };
+    }
   }
 
   return { props: { user, stations } };
