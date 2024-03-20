@@ -10,7 +10,7 @@ const config = {
   port: 800,
 };
 async function fetchFuelPrices(id) {
-  const apiUrl = `https://www.opinet.co.kr/api/detailById.do?code=F240115015&id=${id}&out=xml`;
+  const apiUrl = `https://www.opinet.co.kr/api/detailById.do?code=${process.env.OPINET_CODE}&id=${id}&out=xml`;
   try {
     const response = await axios.get(apiUrl);
     const data = response.data;

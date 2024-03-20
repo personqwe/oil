@@ -7,7 +7,7 @@ exports.join = async (req, res, next) => {
     try {
         const exUser = await User.findOne({ where: {email}});
         if (exUser) {
-            return res.redirect('http://gr5home.iptime.org:300/error');
+            return res.redirect('https://gr5home.iptime.org:8443/error');
         }
         const hash = await bcrypt.hash(password, 12); // 높을수록 느림 암호화
         await User.create({
@@ -29,14 +29,14 @@ exports.login = (req, res, next) => {
             return next(authError);
         }
         if (!user) { // 로직 실패
-            return res.redirect(`http://gr5home.iptime.org:300/error=${info.message}`);
+            return res.redirect(`https://gr5home.iptime.org:8443/error=${info.message}`);
         }
         return req.login(user, (loginError) => { // 로그인 성공
             if (loginError) {
                 console.error(loginError);
                 return next(loginError);
             }
-            return res.redirect('http://gr5home.iptime.org:300/main');
+            return res.redirect('https://gr5home.iptime.org:8443/main');
         });
     })(req, res, next); // 미들웨어 확장패턴, localStrategy 사용 done이 호출되었을 때 가는 곳
 };
@@ -52,7 +52,7 @@ exports.user = ((req, res, next) => {
       res.json({user: req.user });
     } else {
       res.json({user: null });
-      return res.redirect('http://gr5home.iptime.org:300/error');
+      return res.redirect('https://gr5home.iptime.org:8443/error');
     }
   });
   

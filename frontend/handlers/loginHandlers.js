@@ -26,7 +26,7 @@ export const checkLoginStatus = async () => {
         });
     
         if (response.status === 200) {
-            window.location.href = `http://gr5home.iptime.org:300/main`
+            window.location.href = `https://gr5home.iptime.org:8443/main`
           return alert('Successfully login!');
         } else {
           return alert('Login failed');

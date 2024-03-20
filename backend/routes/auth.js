@@ -9,9 +9,9 @@ router.get('/kakao', passport.authenticate('kakao')); // 카카오톡 로그인 
 // /auth/kakao -> 카카오톡 로그인 화면 -> 로그인이 성공 -> /auth/kakao/callback
 // /auth/kakao/callback
 router.get('/kakao/callback', passport.authenticate('kakao', {
-    failureRedirect: 'http://gr5home.iptime.org:300/', // 로그인 실패 시 리디렉션
+    failureRedirect: 'https://gr5home.iptime.org:8443/', // 로그인 실패 시 리디렉션
 }), (req, res) => {
-    res.redirect('http://gr5home.iptime.org:300/main');
+    res.redirect('https://gr5home.iptime.org:8443/main');
 });
 
 router.post('/join', isNotLoggedIn, join);

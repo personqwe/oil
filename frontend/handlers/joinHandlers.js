@@ -17,7 +17,7 @@ export const joinSubmit = async (e, { nick, email, password, confirmPassword }) 
     });
 
     if (response.status === 201) {
-        window.location.href = `http://gr5home.iptime.org:300/`
+        window.location.href = `https://gr5home.iptime.org:8443/`
       return alert('Successfully signed up!');
     } else {
       return alert('Signup failed');
