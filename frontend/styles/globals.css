@@ -40,9 +40,30 @@ body {
   border-radius: 10px; /* 스크롤 바의 둥근 모서리 */
 }
 
-/* 파이어폭스용 스크롤 바 스타일 */
 .home-section {
-  scrollbar-width: thin; /* 스크롤 바의 너비를 얇게 설정 */
-  scrollbar-color: #474651 #060606; /* 스크롤바 색상과 트랙 색상 설정 */
+  scrollbar-width: thin;
+  scrollbar-color: #474651 #060606;
 }
 
+#naver-map {
+  width: 100%;
+  height: calc(100vh - 60px);
+  border: 3px solid #8585fe;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.cheapestCardContainer {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.cheapestCardContainer:hover {
+  background-color: #2a2a2a;
+}
+
+.cheapestCardPrice {
+  color: #ccc;
+  border-radius: 12px;
+}

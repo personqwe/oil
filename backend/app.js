@@ -6,6 +6,8 @@ const session = require('express-session');
 const dotenv = require('dotenv');
 const passport = require('passport'); //클라이언트가 서버에 요청할 자격이 있는지 인증 passport/index.js의 module.exports를 불러옴
 const cors = require('cors');
+const cron = require('node-cron');
+const {UpdateFuelPrices} = require('./batch')
 
 // process.env.COOKIE_SECRET 없음
 dotenv.config(); // process.env
@@ -56,7 +58,12 @@ app.use('/page', pageRouter);
 // Express 라우트 설정
 // 예: app.get('/api/data', (req, res) => { ... });
 app.listen(app.get('port'), () => {
-    console.log(app.get('port'), '번 포트에서 대기중');
+  console.log(app.get('port'), '번 포트에서 대기중');
+  cron.schedule('0 26 20 * * *', () => {
+    console.log('업데이트 중..');
+    UpdateFuelPrices();
+  }, {
+    timezone: "Asia/Seoul"
   });
-
+});
 module.exports = app;
