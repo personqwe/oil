@@ -25,12 +25,16 @@ module.exports = class User extends Sequelize.Model {
         type: Sequelize.STRING(30),
         allowNull: true,
       },
+      profilePhoto: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+      },
     }, {
       sequelize,
       timestamps: true,
       underscored: false,
       modelName: 'User',
-      tableName: 'users',
+      tableName: 'user',
       paranoid: true,
       charset: 'utf8',
       collate: 'utf8_general_ci',

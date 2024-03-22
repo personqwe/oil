@@ -32,6 +32,16 @@ module.exports = class Station extends Sequelize.Model {
             type: Sequelize.STRING(5),
             allowNull: false,
           },
+          x_coordinate: {
+            type: Sequelize.DECIMAL(24, 21),
+            allowNull: false,
+            defaultValue: 0,
+          },
+          y_coordinate: {
+            type: Sequelize.DECIMAL(24, 21),
+            allowNull: false,
+            defaultValue: 0,
+          },
         }, {
           sequelize,
           timestamps: false,
@@ -46,10 +56,16 @@ module.exports = class Station extends Sequelize.Model {
 
     static associate(models) {
         this.belongsTo(models.Region, { 
-          foreignKey: 'region_id',
+          foreignKey: 'region',
           allowNull: false, 
-          targetKey: 'id',
+          targetKey: 'region',
           as: 'Region' 
+        });
+        this.belongsTo(models.Brand, { 
+          foreignKey: 'brand',
+          allowNull: false, 
+          targetKey: 'brand',
+          as: 'Brand' 
         });
       }
   };

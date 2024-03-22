@@ -8,28 +8,11 @@ import { BiMemoryCard } from "react-icons/bi";
 import { MdFavoriteBorder } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import CheapestCard from "./shared/card";
+import initializeMap from './api/map_load';
 
-export function Main({ user, stations }) {
+export function Main({ user, stations, markers }) {
   useEffect(() => {
-    document.querySelector('.home-section').style.scrollbarWidth = 'thin';
-    document.querySelector('.home-section').style.scrollbarColor = '#5e5e5e #1e1e1e';
-    const script = document.createElement('script');
-    script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`;
-    script.async = true;
-    document.head.appendChild(script);
-
-    script.onload = () => {
-      const mapOptions = {
-        center: new window.naver.maps.LatLng(37.3595704, 127.105399),
-        zoom: 10,
-      };
-
-      new window.naver.maps.Map('naver-map', mapOptions);
-    };
-
-    return () => {
-      document.head.removeChild(script);
-    };
+    initializeMap(process.env.NEXT_PUBLIC_NAVER_CLIENT_ID, markers);
   }, []);
   return (
     <div className="flex h-screen bg-[#0D1117] text-white">
@@ -74,19 +57,19 @@ export function Main({ user, stations }) {
   </Link>
   </nav>
       </div>
-      <div className="flex flex-col flex-grow h-full overflow-y-scroll p-14 bg-black home-section">
-    <div className="flex items-center mb-5">
-      <RiHome6Line size="2.0em" color="#7a75b7" className="mt-1"/>
-      <h2 className="text-3xl font-bold ml-3">Home</h2>
-    </div>
-        <div id="naver-map" style={{ width: '100%', height: 'calc(100vh - 60px)' }}></div>
-      </div>
-      <div className="flex flex-col w-1/4 h-full bg-black p-4">
-        <h2 className="text-3xl font-bold mb-4">Cheapest Gas Stations</h2>
-        <div className="flex flex-col gap-4">
-          {stations && stations.map((station, index) => (
-            <CheapestCard key={index} station={station} />
-          ))}
+      <div className="flex-grow h-full overflow-hidden relative p-14 bg-black home-section" style={{ height: 'calc(100vh - 60px)' }}>
+        <div className="flex items-center mb-5">
+          <RiHome6Line size="2.0em" color="#7a75b7" className="mt-1"/>
+          <h2 className="text-3xl font-bold ml-3">Home</h2>
+        </div>
+        <div id="naver-map" style={{ width: '100%', height: '100%' }}></div>
+        {/* CheapestCard 컴포넌트를 포함하는 새로운 컨테이너를 지도의 좌측에 배치 */}
+        <div className="absolute top-0 right-0 p-4 bg-black bg-opacity-75" style={{ height: '100%', width: '20%', maxWidth: '300px' }}>
+          <div className="flex flex-col gap-4 overflow-auto">
+            {stations && stations.map((station, index) => (
+              <CheapestCard key={index} station={station} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

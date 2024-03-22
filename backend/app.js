@@ -59,7 +59,7 @@ app.use('/page', pageRouter);
 // 예: app.get('/api/data', (req, res) => { ... });
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
-  cron.schedule('0 26 20 * * *', () => {
+  cron.schedule('0 59 22 * * *', () => {
     console.log('업데이트 중..');
     UpdateFuelPrices();
   }, {

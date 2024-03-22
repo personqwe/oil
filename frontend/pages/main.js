@@ -1,10 +1,10 @@
 import MainComponent from '../components/main';
 import axios from 'axios';
 
-export default function Home({ user, stations }) {
+export default function Home({ user, stations, markers }) {
   return (
     <div>
-      <MainComponent user={user} stations={stations} />
+      <MainComponent user={user} stations={stations} markers={markers}/>
     </div>
   );
 }
@@ -13,7 +13,7 @@ export async function getServerSideProps(context) {
   const cookie = context.req.headers.cookie;
   let user = null;
   let stations = [];
-
+  let markers = [];
   try {
     const userResponse = await axios.get('http://gr5home.iptime.org:300/auth/api/user', {
       headers: {
@@ -27,6 +27,10 @@ export async function getServerSideProps(context) {
     });
     stations = stationsResponse.data;
 
+    const markerResponse = await axios.get('http://gr5home.iptime.org:300/page/api/marker', {
+      headers: { Cookie: cookie || '' },
+    });
+    markers = markerResponse.data;
   } catch (error) {
     if (error.response && error.response.status === 403) {
       return {
@@ -38,5 +42,5 @@ export async function getServerSideProps(context) {
     }
   }
 
-  return { props: { user, stations } };
+  return { props: { user, stations, markers} };
 }
