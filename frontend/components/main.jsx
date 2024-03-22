@@ -63,7 +63,6 @@ export function Main({ user, stations, markers }) {
           <h2 className="text-3xl font-bold ml-3">Home</h2>
         </div>
         <div id="naver-map" style={{ width: '100%', height: '100%' }}></div>
-        {/* CheapestCard 컴포넌트를 포함하는 새로운 컨테이너를 지도의 좌측에 배치 */}
         <div className="absolute top-0 right-0 p-4 bg-black bg-opacity-75" style={{ height: '100%', width: '20%', maxWidth: '300px' }}>
           <div className="flex flex-col gap-4 overflow-auto">
             {stations && stations.map((station, index) => (
