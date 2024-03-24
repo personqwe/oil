@@ -8,13 +8,20 @@ const passport = require('passport'); //클라이언트가 서버에 요청할 �
 const cors = require('cors');
 const cron = require('node-cron');
 const {UpdateFuelPrices} = require('./batch')
-
+const https = require('https');
+const fs = require('fs');
 // process.env.COOKIE_SECRET 없음
 dotenv.config(); // process.env
 // process.env.COOKIE_SECRET 있음
 
+const httpsOptions = {
+  key: fs.readFileSync('./ssl/key.pem'), // 개인 키 파일 경로
+  cert: fs.readFileSync('./ssl/cert.pem') // 인증서 파일 경로
+};
+
 const authRouter = require('./routes/auth');
 const pageRouter = require('./routes/page');
+const userRouter = require('./routes/user')
 const passportConfig = require('./passport'); // passport설정
 const { sequelize } = require('./models');
 
@@ -22,8 +29,8 @@ const app = express();
 app.set('port', process.env.PORT || 8080);
 passportConfig(); // passport 실행
 app.use(cors({
-    origin: 'gr5home.iptime.org:2000',
-    credentials: true 
+    origin: 'https://gr5home.iptime.org:8443',
+    credentials: true ,
 }));
 
 sequelize.sync({ force: false })
@@ -45,7 +52,8 @@ app.use(session({
     secret: process.env.COOKIE_SECRET,
     cookie: {
         httpOnly: true, // 자바스크립트 접근 못하게(보안에 좋음)
-        secure: false, // https 적용할 때 true
+        secure: true, // https 적용할 때 true
+        sameSite:'none',
     },
 }));
 // 세션쿠키랑 유저 아이디는 연결되어있다.
@@ -55,10 +63,11 @@ app.use(passport.session()); // user.id를 저장한게 session으로 저장. Co
 
 app.use('/auth', authRouter);
 app.use('/page', pageRouter);
+app.use('/user', userRouter);
 // Express 라우트 설정
 // 예: app.get('/api/data', (req, res) => { ... });
-app.listen(app.get('port'), () => {
-  console.log(app.get('port'), '번 포트에서 대기중');
+https.createServer(httpsOptions, app).listen(app.get('port'), () => {
+  console.log(`HTTPS server running on port ${app.get('port')}`);
   cron.schedule('0 59 22 * * *', () => {
     console.log('업데이트 중..');
     UpdateFuelPrices();

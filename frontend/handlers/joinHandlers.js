@@ -10,7 +10,7 @@ export const joinSubmit = async (e, { nick, email, password, confirmPassword }) 
   
   try {
     console.log(nick, email, password, confirmPassword);
-    const response = await axios.post('http://gr5home.iptime.org:300/auth/api/join', {
+    const response = await axios.post('https://gr5home.iptime.org:8443/auth/api/join', {
       nick,
       email,
       password,

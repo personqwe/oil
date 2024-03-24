@@ -64,3 +64,92 @@ body {
   max-height: 100%; /* 최대 높이 제한 */
   object-fit: contain; /* 이미지가 컨테이너에 맞게 조절되도록 설정 */
 }
+
+.iw_inner {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.station_info {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.fuel_prices {
+  margin-bottom: 5px;
+}
+
+.click_info_content {
+  padding: 10px;
+  max-width: 500px;
+  line-height: 1.5;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.info_region, .info_brand, .info_address {
+  color: #555;
+}
+
+.favorite_button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.fuel_price {
+  color: black;
+}
+
+.premium_gasoline {
+  color: #DAA520; /* 고급 휘발유 */
+}
+
+.gasoline {
+  color: #FF4500; /* 휘발유 */
+}
+
+.diesel {
+  color: #1E90FF; /* 경유 */
+}
+
+.kerosene {
+  color: #32CD32; /* 등유 */
+}
+
+/* 추가적인 색상 스타일 */
+.info_name {
+  color: #007bff; /* 주유소 이름 */
+}
+
+.info_detail, .fuel_price {
+  color: black; /* 상세 정보와 연료 가격 */
+}
+
+.favorite_button {
+  background-color: #007bff; /* 관심 주유소 등록 버튼 */
+  color: white;
+}
+
+/* 기타 스타일 */
+.info_detail span {
+  color: #555; /* 상세 정보 타이틀 색상 */
+}
+
+.click_info_container {
+  padding: 10px;
+  max-width: 500px;
+  line-height: 1.5;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}

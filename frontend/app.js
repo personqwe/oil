@@ -1,7 +1,6 @@
 const express = require('express');
 const next = require('next');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-
 const dev = process.env.NODE_ENV !== 'production';
 const server = next({ dev });
 const handle = server.getRequestHandler();
@@ -12,15 +11,23 @@ server.prepare().then(() => {
     
     // 백엔드 라우트를 위한 프록시 설정
     app.use('/auth/kakao', createProxyMiddleware({
-        target: 'http://gr5home.iptime.org:500',
+        target: 'https://gr5home.iptime.org:500',
         changeOrigin: true,
-        pathRewrite: { '^/auth/kakao': '/auth/kakao' }
+        pathRewrite: { '^/auth/kakao': '/auth/kakao' },
+        secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
+        ssl: {
+            rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
+        }
     }));
 
     app.use('/auth/api/check', createProxyMiddleware({
-        target: 'http://gr5home.iptime.org:500',
+        target: 'https://gr5home.iptime.org:500',
         changeOrigin: true,
         pathRewrite: { '^/auth/api/check': '/auth/check' },
+        secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
+        ssl: {
+            rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
+        },
         onProxyRes: function (proxyRes, req, res) {
             proxyRes.on('data', function(data) {
             console.log("check Received data from Backend: ", data.toString());
@@ -29,9 +36,13 @@ server.prepare().then(() => {
     }));
 
     app.use('/auth/api/user', createProxyMiddleware({
-        target: 'http://gr5home.iptime.org:500',
+        target: 'https://gr5home.iptime.org:500',
         changeOrigin: true,
         pathRewrite: { '^/auth/api/user': '/auth/user' },
+        secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
+        ssl: {
+            rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
+        },
         onProxyRes: function (proxyRes, req, res) {
             proxyRes.on('data', function(data) {
             console.log("user Received data from Backend: ", data.toString());
@@ -40,15 +51,23 @@ server.prepare().then(() => {
     }));
 
     app.use('/auth/api/join', createProxyMiddleware({
-        target: 'http://gr5home.iptime.org:500',
+        target: 'https://gr5home.iptime.org:500',
         changeOrigin: true,
         pathRewrite: { '^/auth/api/join': '/auth/join' },
+        secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
+        ssl: {
+            rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
+        },
     }));
 
     app.use('/page/api/cheapest', createProxyMiddleware({
-        target: 'http://gr5home.iptime.org:500',
+        target: 'https://gr5home.iptime.org:500',
         changeOrigin: true,
         pathRewrite: { '^/page/api/cheapest': '/page/cheapest' },
+        secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
+        ssl: {
+            rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
+        },
         onProxyRes: function (proxyRes, req, res) {
             proxyRes.on('data', function(data) {
             console.log("cheapest Received data from Backend: ", data.toString());
@@ -56,8 +75,37 @@ server.prepare().then(() => {
     }
     }));
 
+    app.use('/page/api/marker', createProxyMiddleware({
+        target: 'https://gr5home.iptime.org:500',
+        changeOrigin: true,
+        pathRewrite: { '^/page/api/marker': '/page/marker' },
+        secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
+        ssl: {
+            rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
+        },
+        onProxyRes: function (proxyRes, req, res) {
+            proxyRes.on('data', function(data) {
+            console.log("marker Received data from Backend: ", data.toString());
+    });
+    }
+    }));
+
+    app.use('/user/api/favorite', createProxyMiddleware({
+        target: 'https://gr5home.iptime.org:500',
+        changeOrigin: true,
+        pathRewrite: { '^/user/api/favorite': '/user/favorite' },
+        secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
+        ssl: {
+            rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
+        },
+        onProxyRes: function (proxyRes, req, res) {
+            proxyRes.on('data', function(data) {
+            console.log("favorite Received data from Backend: ", data.toString());
+    });
+    }
+    }));
+
      app.all('*', (req, res) => {
-        console.log('들어옴');
         return handle(req, res);
     });
 

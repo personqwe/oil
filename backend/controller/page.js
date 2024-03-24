@@ -27,7 +27,7 @@ exports.cheapestStation = async (req, res, next) => {
 exports.markerStation = async (req, res, next) => {
   try {
     const markers = await Station.findAll({
-      attributes: ['name', 'region', 'brand', 'address', 'premium_gasoline_price', 'gasoline_price', 'diesel_price', 'kerosene_price','x_coordinate', 'y_coordinate'],
+      attributes: ['id', 'name', 'region', 'brand', 'address', 'premium_gasoline_price', 'gasoline_price', 'diesel_price', 'kerosene_price','x_coordinate', 'y_coordinate'],
       include: [{
         model: Brand,
         as: 'Brand',
