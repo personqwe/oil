@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 
-export function recent_searches() {
+export function Recent_Searches() {
   return (
     <div className="bg-white">
       <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
@@ -129,4 +129,4 @@ function SearchIcon(props) {
     </svg>
   )
 }
-export default recent_searches;
+export default Recent_Searches;

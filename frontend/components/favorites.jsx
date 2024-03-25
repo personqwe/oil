@@ -6,8 +6,20 @@ import { MdOutlineManageSearch } from "react-icons/md";
 import { BiMemoryCard } from "react-icons/bi";
 import { MdFavoriteBorder } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
+import { useEffect, useState } from 'react';
 
-export function favorites() {
+export function Favorites() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
+  const userName = user ? user.nick : 'Guest';
+  const userEmail = user ? user.email : '@';
+  const userprofilePhoto = user ? user.profilePhoto : '/';
   return (
     <div className="flex h-screen bg-[#0D1117] text-white">
     <div className="flex flex-col w-1/5 h-full bg-[#080808] p-5">
@@ -16,11 +28,16 @@ export function favorites() {
         <span className="text-2xl font-bold">FuelFinde</span>
       </div>
       <div className="flex items-center mb-4">
-        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-400 mr-2">
-        </div>
+      <div className="flex items-center justify-center mr-2">
+  <img
+    src={userprofilePhoto}
+    alt="User profile photo"
+    className="w-10 h-10 rounded-full bg-blue-400"
+  />
+</div>
         <div>
-          <div className="text-lg font-semibold">Faizan</div>
-          <div className="text-xs text-gray-400">@faizan</div>
+          <div className="text-lg font-semibold">{userName}</div>
+          <div className="text-xs text-gray-400">{userEmail}</div>
         </div>
       </div>
       <nav className="mt-4">
@@ -76,4 +93,4 @@ function FuelIcon(props) {
   );
 }
 
-export default favorites;
+export default Favorites;

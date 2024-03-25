@@ -83,17 +83,42 @@ server.prepare().then(() => {
         ssl: {
             rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
         },
+    }));
+
+    app.use('/page/api/favorite', createProxyMiddleware({
+        target: 'https://gr5home.iptime.org:500',
+        changeOrigin: true,
+        pathRewrite: { '^/page/api/favorite': '/page/favorite' },
+        secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
+        ssl: {
+            rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
+        },
         onProxyRes: function (proxyRes, req, res) {
             proxyRes.on('data', function(data) {
-            console.log("marker Received data from Backend: ", data.toString());
+            console.log("favoritelist Received data from Backend: ", data.toString());
     });
     }
     }));
 
-    app.use('/user/api/favorite', createProxyMiddleware({
+    app.use('/user/api/addfavorite', createProxyMiddleware({
         target: 'https://gr5home.iptime.org:500',
         changeOrigin: true,
-        pathRewrite: { '^/user/api/favorite': '/user/favorite' },
+        pathRewrite: { '^/user/api/addfavorite': '/user/addfavorite' },
+        secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
+        ssl: {
+            rejectUnauthorized: false // 자체 서명된 인증서를 신뢰
+        },
+        onProxyRes: function (proxyRes, req, res) {
+            proxyRes.on('data', function(data) {
+            console.log("favorite Received data from Backend: ", data.toString());
+    });
+    }
+    }));
+
+    app.use('/user/api/removefavorite', createProxyMiddleware({
+        target: 'https://gr5home.iptime.org:500',
+        changeOrigin: true,
+        pathRewrite: { '^/user/api/removefavorite': '/user/removefavorite' },
         secure: false, // 자체 서명된 인증서에 대한 검증 비활성화
         ssl: {
             rejectUnauthorized: false // 자체 서명된 인증서를 신뢰

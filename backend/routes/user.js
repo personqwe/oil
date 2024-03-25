@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { favorite } = require('../controller/user');
+const { addFavorite, removeFavorite } = require('../controller/user');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 
-router.post('/favorite', isLoggedIn, favorite);
-
+router.post('/addfavorite', isLoggedIn, addFavorite);
+router.post('/removefavorite', isLoggedIn, removeFavorite);
 module.exports = router;

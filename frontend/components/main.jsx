@@ -10,7 +10,7 @@ import { CgProfile } from "react-icons/cg";
 import CheapestCard from "./shared/card";
 import initializeMap from './api/map_load';
 
-export function Main({ user, stations, markers }) {
+export function Main({ user, stations, markers, favorites}) {
   useEffect(() => {
     initializeMap(process.env.NEXT_PUBLIC_NAVER_CLIENT_ID, markers);
   }, []);
@@ -66,7 +66,7 @@ export function Main({ user, stations, markers }) {
         <div className="absolute top-0 right-0 p-4 bg-black bg-opacity-75" style={{ height: '100%', width: '20%', maxWidth: '300px' }}>
           <div className="flex flex-col gap-4 overflow-auto">
             {stations && stations.map((station, index) => (
-              <CheapestCard key={index} station={station} />
+              <CheapestCard key={index} station={station} favorites={favorites} />
             ))}
           </div>
         </div>

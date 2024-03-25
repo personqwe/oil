@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { joinSubmit } from "@/handlers/joinHandlers"
 
-export function join() {
+export function Join() {
   const [nick, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -98,4 +98,4 @@ function FuelIcon(props) {
     </svg>
   );
 }
-export default join;
+export default Join;
