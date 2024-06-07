@@ -1,4 +1,4 @@
-import {FavoriteStation} from '../../handlers/userHandlers'
+import { AddFavoriteStation } from '../../handlers/UserHandlers';
 
 const loadMap = (clientId) => {
   return new Promise((resolve, reject) => {
@@ -51,16 +51,16 @@ const initializeMap = async (clientId, markers) => {
       var mouseOverInfoContent = [
         '<div class="iw_inner">',
         '<div class="station_info">주유소 정보</div>',
-    ];
+      ];
       
-    var fuelPrices = [
-      markerData.premium_gasoline_price !== "0" ? `<span class="fuel_price">고급 휘발유: </span><span class="premium_gasoline">${markerData.premium_gasoline_price} KRW</span>` : '',
-      markerData.gasoline_price !== "0" ? `<span class="fuel_price">휘발유: </span><span class="gasoline">${markerData.gasoline_price} KRW</span>` : '',
-      markerData.diesel_price !== "0" ? `<span class="fuel_price">경유: </span><span class="diesel">${markerData.diesel_price} KRW</span>` : '',
-      markerData.kerosene_price !== "0" ? `<span class="fuel_price">등유: </span><span class="kerosene">${markerData.kerosene_price} KRW</span>` : '',
-    ].filter(price => price !== '').join(' | ');
+      var fuelPrices = [
+        markerData.premium_gasoline_price !== "0" ? `<span class="fuel_price">고급 휘발유: </span><span class="premium_gasoline">${markerData.premium_gasoline_price} KRW</span>` : '',
+        markerData.gasoline_price !== "0" ? `<span class="fuel_price">휘발유: </span><span class="gasoline">${markerData.gasoline_price} KRW</span>` : '',
+        markerData.diesel_price !== "0" ? `<span class="fuel_price">경유: </span><span class="diesel">${markerData.diesel_price} KRW</span>` : '',
+        markerData.kerosene_price !== "0" ? `<span class="fuel_price">등유: </span><span class="kerosene">${markerData.kerosene_price} KRW</span>` : '',
+      ].filter(price => price !== '').join(' | ');
       
-      if(fuelPrices) {
+      if (fuelPrices) {
         mouseOverInfoContent.push(`<div style="margin-bottom: 5px;">${fuelPrices}</div>`);
       }
 
@@ -114,7 +114,16 @@ const initializeMap = async (clientId, markers) => {
           const favoriteButton = document.getElementById(buttonId);
           if (favoriteButton) {
             favoriteButton.addEventListener('click', () => {
-              FavoriteStation(markerData.id);
+              AddFavoriteStation(markerData.id)
+                .then(() => {
+                  favoriteButton.textContent = '관심 주유소 등록됨';
+                  favoriteButton.disabled = true;
+                  alert('관심 주유소로 등록되었습니다.');
+                })
+                .catch((error) => {
+                  console.error('Error adding favorite station:', error);
+                  alert('관심 주유소 등록에 실패했습니다.');
+                });
             });
           }
         }, 0);
@@ -125,6 +134,5 @@ const initializeMap = async (clientId, markers) => {
     console.error(error);
   }
 };
-
 
 export default initializeMap;

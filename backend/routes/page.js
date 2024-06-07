@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { cheapestStation, markerStation, userFavorite } = require('../controller/page');
+const { CheapestStation, MarkerStation } = require('../controller/page');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 
-router.get('/cheapest', isLoggedIn, cheapestStation);
+router.get('/cheapest', isLoggedIn, CheapestStation);
 
-router.get('/marker', isLoggedIn, markerStation);
+router.get('/marker', isLoggedIn, MarkerStation);
 
-router.get('/favorite', isLoggedIn, userFavorite);
 module.exports = router;

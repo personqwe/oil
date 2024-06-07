@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const handleKakaoLogin = () => {
   window.location.href = `https://gr5home.iptime.org:8443/auth/kakao`;
 };
@@ -34,3 +36,19 @@ export const loginSubmit = async (e, { email, password }) => {
       alert('Login failed');
   }
 }
+
+export const Logout = async () => {
+  console.log('Logout function called');
+  try {
+    const response = await axios.get('https://gr5home.iptime.org:8443/auth/api/logout', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true
+    });
+    console.log('Logout response:', response);
+    window.location.href = 'https://gr5home.iptime.org:8443/';
+  } catch (error) {
+    console.error('Error during logout:', error);
+  }
+};

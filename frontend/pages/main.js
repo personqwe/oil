@@ -1,15 +1,16 @@
-import MainComponent from '../components/main';
+import MainComponent from '../components/Main';
 import axios from 'axios';
 import { useEffect } from 'react';
 
 export default function Home({ user, stations, markers, favorites}) {
-  // 컴포넌트가 마운트될 때 로컬 스토리지에 user 데이터 저장
   useEffect(() => {
-    // 서버 사이드에서 받아온 user 데이터가 있다면 로컬 스토리지에 저장
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
     }
-  }, [user]); // user 데이터가 변경될 때마다 실행
+    if (stations) {
+      localStorage.setItem('stations', JSON.stringify(stations));
+    }
+  }, [user, stations]);
 
   return (
     <div>
@@ -29,7 +30,7 @@ export async function getServerSideProps(context) {
       axios.get('http://gr5home.iptime.org:300/auth/api/user', { headers: { Cookie: cookie || '' } }),
       axios.get('http://gr5home.iptime.org:300/page/api/cheapest', { headers: { Cookie: cookie || '' } }),
       axios.get('http://gr5home.iptime.org:300/page/api/marker', { headers: { Cookie: cookie || '' } }),
-      axios.get('http://gr5home.iptime.org:300/page/api/favorite', { headers: { Cookie: cookie || '' }}),
+      axios.get('http://gr5home.iptime.org:300/user/api/favorite', { headers: { Cookie: cookie || '' }}),
     ]);
   
     user = userResponse.data.user;

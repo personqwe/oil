@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // 빈 하트와 채워진 하트 아이콘
-import { AddFavoriteStation, RemoveFavoriteStation } from '@/handlers/userHandlers'; // 관심 주유소 추가/삭제를 처리하는 함수
+import { AddFavoriteStation, RemoveFavoriteStation } from '@/handlers/UserHandlers'; // 관심 주유소 추가/삭제를 처리하는 함수
 
 function CheapestCard({ station, favorites }) {
   const [isFavorited, setIsFavorited] = useState(false);

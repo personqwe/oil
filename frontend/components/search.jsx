@@ -1,15 +1,18 @@
-import Link from "next/link"
-import { Input } from "@/components/ui/input"
-import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
-import { RiHome6Line } from "react-icons/ri";
-import { MdOutlineManageSearch } from "react-icons/md";
-import { BiMemoryCard } from "react-icons/bi";
-import { MdFavoriteBorder } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import { RiHome6Line } from 'react-icons/ri';
+import { MdOutlineManageSearch } from 'react-icons/md';
+import { BiMemoryCard } from 'react-icons/bi';
+import { MdFavoriteBorder } from 'react-icons/md';
+import { CgProfile } from 'react-icons/cg';
+import { fetchSearchResults } from '../handlers/SearchHandlers';
+import SearchCard from './shared/SearchCard';
 
 export function Search() {
   const [user, setUser] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -17,73 +20,103 @@ export function Search() {
       setUser(JSON.parse(userData));
     }
   }, []);
+
+  const handleSearch = async (event) => {
+    const query = event.target.value;
+    console.log('Search query:', query);
+    if (query.trim() !== '') {
+      try {
+        const response = await fetchSearchResults(query);
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      }
+    } else {
+      setSearchResults([]);
+    }
+  };
+
   const userName = user ? user.nick : 'Guest';
   const userEmail = user ? user.email : '@';
   const userprofilePhoto = user ? user.profilePhoto : '/';
+
   return (
     <div className="flex h-screen bg-[#0D1117] text-white">
-    <div className="flex flex-col w-1/5 h-full bg-[#080808] p-5">
-      <div className="flex items-center mb-6">
-        <FuelIcon className="mr-3 h-16 w-8 text-purple-500" />
-        <span className="text-2xl font-bold">FuelFinde</span>
-      </div>
-      <div className="flex items-center mb-4">
-      <div className="flex items-center justify-center mr-2">
-  <img
-    src={userprofilePhoto}
-    alt="User profile photo"
-    className="w-10 h-10 rounded-full bg-blue-400"
-  />
-</div>
-        <div>
-          <div className="text-lg font-semibold">{userName}</div>
-          <div className="text-xs text-gray-400">{userEmail}</div>
+      <div className="flex flex-col w-1/5 h-full bg-[#080808] p-5">
+        <div className="flex items-center mb-6">
+          <FuelIcon className="mr-3 h-16 w-8 text-purple-500" />
+          <span className="text-2xl font-bold">FuelFinde</span>
         </div>
+        <div className="flex items-center mb-4">
+          <div className="flex items-center justify-center mr-2">
+            <img
+              src={userprofilePhoto}
+              alt="User profile photo"
+              className="w-10 h-10 rounded-full bg-blue-400"
+            />
+          </div>
+          <div>
+            <div className="text-lg font-semibold">{userName}</div>
+            <div className="text-xs text-gray-400">{userEmail}</div>
+          </div>
+        </div>
+        <nav className="mt-4">
+          <Link href="/main" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
+            <RiHome6Line size="1.7em" color="#7a75b7" />
+            <span className="ml-3">Home</span>
+          </Link>
+          <Link href="/search" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm bg-[#8585fe] text-white font-bold">
+            <MdOutlineManageSearch size="1.7em" />
+            <span className="ml-3">Search</span>
+          </Link>
+          <Link href="/favorites" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
+            <MdFavoriteBorder size="1.7em" color="#7a75b7" />
+            <span className="ml-3">Favorites</span>
+          </Link>
+          <Link href="/profile" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
+            <CgProfile size="1.7em" color="#7a75b7" />
+            <span className="ml-3">Profile</span>
+          </Link>
+          <Link href="/logout" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
+            <BiMemoryCard size="1.7em" color="#7a75b7" />
+            <span className="ml-3">Logout</span>
+          </Link>
+        </nav>
       </div>
-      <nav className="mt-4">
-  <Link href="/main" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
-    <RiHome6Line size="1.7em" color="#7a75b7" />
-    <span className="ml-3">Home</span>
-  </Link>
-  <Link href="/search" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm bg-[#8585fe] text-white font-bold">
-    <MdOutlineManageSearch size="1.7em"/>
-    <span className="ml-3">Search</span>
-  </Link>
-  <Link href="/recent_search" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
-    <BiMemoryCard size="1.7em" color="#7a75b7"/>
-    <span className="ml-3">Recent Search</span>
-  </Link>
-  <Link href="/favorites" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
-    <MdFavoriteBorder size="1.7em" color="#7a75b7"/>
-    <span className="ml-3">Favorites</span>
-  </Link>
-  <Link href="/profile" className="flex items-center h-14 mb-6 p-2 rounded-lg text-sm text-white font-bold">
-    <CgProfile size="1.7em" color="#7a75b7"/>
-    <span className="ml-3">Profile</span>
-  </Link>
-</nav>
-    </div>
       <div className="flex flex-col flex-grow h-full overflow-y-scroll p-16 home-section bg-black">
         <div className="flex flex-col items-center w-full">
           <div className="flex items-center mb-8">
-            <MdOutlineManageSearch size="2.0em" color="#7a75b7" className="mt-1"/>
+            <MdOutlineManageSearch size="2.0em" color="#7a75b7" className="mt-1" />
             <h2 className="text-3xl font-bold ml-3">Search</h2>
           </div>
 
-          <form className="w-full max-w-lg">
+          <div className="w-full max-w-xl">
             <div className="relative flex items-center">
               <SearchIcon className="absolute left-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
               <Input
+                name="searchInput"
                 className="pl-8 w-full bg-gray-700 border-none"
                 placeholder="Search for gas stations within radius..."
                 type="search"
+                onChange={handleSearch}
               />
             </div>
-          </form>
+          </div>
+
+          {searchResults.length > 0 && (
+            <div className="mt-8 w-full max-w-xl">
+              <h3 className="text-2xl font-bold mb-4">Search Results</h3>
+              <ul className="space-y-4">
+                {searchResults.map((result, index) => (
+                  <SearchCard key={index} result={result} favorites={favorites} />
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function FuelIcon(props) {
@@ -125,7 +158,7 @@ function SearchIcon(props) {
       <circle cx="11" cy="11" r="8" />
       <path d="m21 21-4.3-4.3" />
     </svg>
-  )
+  );
 }
 
 export default Search;
