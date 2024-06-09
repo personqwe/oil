@@ -1,34 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { FaHeart, FaRegHeart } from 'react-icons/fa'; // 빈 하트와 채워진 하트 아이콘
-import { AddFavoriteStation, RemoveFavoriteStation } from '@/handlers/UserHandlers'; // 관심 주유소 추가/삭제를 처리하는 함수
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { AddFavoriteStation, RemoveFavoriteStation } from '@/handlers/UserHandlers';
 
 function CheapestCard({ station, favorites }) {
   const [isFavorited, setIsFavorited] = useState(false);
 
-  // 컴포넌트가 마운트될 때 관심 주유소 여부를 결정합니다.
   useEffect(() => {
-    if (favorites) {
-      const isFavorite = favorites.some(favoriteItem => favoriteItem.favorite.station_id === station.id);
-      setIsFavorited(isFavorite);
-    }
+    // 즐겨찾기 여부를 초기화합니다.
+    const isFavorite = favorites.some(favoriteItem => favoriteItem.favorite.station_id === station.id);
+    setIsFavorited(isFavorite);
   }, [favorites, station.id]);
 
   const toggleFavorite = () => {
     if (isFavorited) {
-      // 이미 관심 주유소로 등록된 경우, 관심 주유소를 삭제합니다.
       RemoveFavoriteStation(station.id)
         .then(() => {
-          setIsFavorited(false); // 상태 업데이트를 성공적으로 수행한 후에만 UI 상태를 변경합니다.
+          setIsFavorited(false);
           console.log('Successfully removed from favorites.');
         })
         .catch((error) => {
           console.error('Error removing favorite station:', error);
         });
     } else {
-      // 관심 주유소로 등록되지 않은 경우, 관심 주유소를 추가합니다.
       AddFavoriteStation(station.id)
         .then(() => {
-          setIsFavorited(true); // 상태 업데이트를 성공적으로 수행한 후에만 UI 상태를 변경합니다.
+          setIsFavorited(true);
           console.log('Successfully added to favorites.');
         })
         .catch((error) => {

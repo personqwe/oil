@@ -1,4 +1,4 @@
-import JoinComponent from '../components/join';
+import JoinComponent from '../components/Join';
 
 export default function Join() {
   return (

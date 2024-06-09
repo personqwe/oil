@@ -32,7 +32,7 @@ exports.MarkerStation = async (req, res, next) => {
       include: [{
         model: Brand,
         as: 'Brand',
-        attributes: ['marker_img']
+        attributes: ['img', 'marker_img']
       }],
     });
     res.json(markers);

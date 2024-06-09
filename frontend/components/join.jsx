@@ -3,7 +3,7 @@ import Link from "next/link"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { joinSubmit } from "@/handlers/joinHandlers"
+import { joinSubmit } from "@/handlers/JoinHandlers"
 
 export function Join() {
   const [nick, setNickname] = useState('');

@@ -19,7 +19,7 @@ function FavoritesComponent() {
       setUser(JSON.parse(userData));
     }
 
-    const stationsData = localStorage.getItem('stations');
+    const stationsData = localStorage.getItem('markers');
     if (stationsData) {
       setStations(JSON.parse(stationsData));
     }

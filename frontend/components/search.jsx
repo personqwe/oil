@@ -7,6 +7,7 @@ import { BiMemoryCard } from 'react-icons/bi';
 import { MdFavoriteBorder } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { fetchSearchResults } from '../handlers/SearchHandlers';
+import { FavoriteStation } from '../handlers/UserHandlers';
 import SearchCard from './shared/SearchCard';
 
 export function Search() {
@@ -19,7 +20,13 @@ export function Search() {
     if (userData) {
       setUser(JSON.parse(userData));
     }
+    FavoriteStation().then(response => {
+      setFavorites(response.data);
+    }).catch(error => {
+      console.error('Error fetching favorite stations:', error);
+    });
   }, []);
+
 
   const handleSearch = async (event) => {
     const query = event.target.value;

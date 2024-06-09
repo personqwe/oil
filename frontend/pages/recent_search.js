@@ -1,4 +1,4 @@
-import Recent_searchComponent from '../components/recent_searches';
+import Recent_searchComponent from '../components/Recent_searches';
 
 export default function Recent_search() {
     return (

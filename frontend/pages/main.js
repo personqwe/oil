@@ -7,10 +7,10 @@ export default function Home({ user, stations, markers, favorites}) {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
     }
-    if (stations) {
-      localStorage.setItem('stations', JSON.stringify(stations));
+    if (markers) {
+      localStorage.setItem('markers', JSON.stringify(markers));
     }
-  }, [user, stations]);
+  }, [user, markers]);
 
   return (
     <div>
